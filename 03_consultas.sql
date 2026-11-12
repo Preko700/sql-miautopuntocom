@@ -48,3 +48,17 @@ FROM ventas v
 JOIN clientes c   ON c.id_cliente   = v.id_cliente
 JOIN vehiculos ve ON ve.id_vehiculo = v.id_vehiculo
 WHERE v.precio_final = (SELECT MAX(precio_final) FROM ventas);
+
+-- ----------------------------------------------------------------------------
+-- 5. Vehículos vendidos en el último mes con información del cliente comprador.
+-- ----------------------------------------------------------------------------
+SELECT v.fecha_venta,
+       ve.marca, ve.modelo, ve.anio, ve.vin,
+       v.precio_final,
+       CONCAT(c.nombre, ' ', c.apellido) AS cliente,
+       c.cedula, c.telefono, c.email
+FROM ventas v
+JOIN vehiculos ve ON ve.id_vehiculo = v.id_vehiculo
+JOIN clientes c   ON c.id_cliente   = v.id_cliente
+WHERE v.fecha_venta BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE()
+ORDER BY v.fecha_venta DESC;
