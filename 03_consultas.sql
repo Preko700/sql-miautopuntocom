@@ -88,3 +88,17 @@ FROM ventas v
 JOIN vehiculos ve ON ve.id_vehiculo = v.id_vehiculo
 GROUP BY ve.tipo
 ORDER BY promedio_precio_final DESC;
+
+-- ----------------------------------------------------------------------------
+-- 8. Marca de vehículo que se ha vendido más veces
+--    (si hay empate, se muestran todas las marcas empatadas).
+-- ----------------------------------------------------------------------------
+WITH ventas_por_marca AS (
+    SELECT ve.marca, COUNT(*) AS total_ventas
+    FROM ventas v
+    JOIN vehiculos ve ON ve.id_vehiculo = v.id_vehiculo
+    GROUP BY ve.marca
+)
+SELECT marca, total_ventas
+FROM ventas_por_marca
+WHERE total_ventas = (SELECT MAX(total_ventas) FROM ventas_por_marca);
