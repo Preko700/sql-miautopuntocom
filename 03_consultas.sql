@@ -15,3 +15,13 @@ FROM vehiculos ve
 LEFT JOIN ventas v ON v.id_vehiculo = ve.id_vehiculo
 WHERE v.id_venta IS NULL
 ORDER BY ve.precio DESC;
+
+-- ----------------------------------------------------------------------------
+-- 2. Total de ventas realizadas por cada vendedor (nombre y cantidad de ventas).
+-- ----------------------------------------------------------------------------
+SELECT CONCAT(vd.nombre, ' ', vd.apellido) AS vendedor,
+       COUNT(v.id_venta)                   AS cantidad_ventas
+FROM vendedores vd
+LEFT JOIN ventas v ON v.id_vendedor = vd.id_vendedor
+GROUP BY vd.id_vendedor, vd.nombre, vd.apellido
+ORDER BY cantidad_ventas DESC;
