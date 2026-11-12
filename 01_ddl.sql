@@ -34,3 +34,37 @@ CREATE TABLE vehiculos (
     CONSTRAINT chk_vehiculos_precio     CHECK (precio > 0),
     CONSTRAINT chk_vehiculos_estado     CHECK (estado IN ('Nuevo', 'Usado'))
 ) ENGINE = InnoDB;
+
+CREATE TABLE clientes (
+    id_cliente INT           NOT NULL AUTO_INCREMENT,
+    nombre     VARCHAR(50)   NOT NULL,
+    apellido   VARCHAR(50)   NOT NULL,
+    cedula     VARCHAR(20)   NOT NULL,
+    telefono   VARCHAR(20)   NOT NULL,
+    email      VARCHAR(100)  NOT NULL,
+    direccion  VARCHAR(200)  NOT NULL,
+
+    CONSTRAINT pk_clientes         PRIMARY KEY (id_cliente),
+    CONSTRAINT uq_clientes_cedula  UNIQUE (cedula),
+    CONSTRAINT uq_clientes_email   UNIQUE (email),
+    CONSTRAINT chk_clientes_email  CHECK (email LIKE '%_@_%._%')
+) ENGINE = InnoDB;
+
+CREATE TABLE vendedores (
+    id_vendedor         INT           NOT NULL AUTO_INCREMENT,
+    nombre              VARCHAR(50)   NOT NULL,
+    apellido            VARCHAR(50)   NOT NULL,
+    cedula              VARCHAR(20)   NOT NULL,
+    fecha_nacimiento    DATE          NOT NULL,  -- necesaria para validar la edad mínima
+    fecha_contratacion  DATE          NOT NULL,
+    comision_porcentual DECIMAL(4,2)  NOT NULL,  -- por ejemplo 5.50 = 5.5 %
+
+    CONSTRAINT pk_vendedores         PRIMARY KEY (id_vendedor),
+    CONSTRAINT uq_vendedores_cedula  UNIQUE (cedula),
+    CONSTRAINT chk_vendedores_comision
+        CHECK (comision_porcentual BETWEEN 0 AND 20),
+    -- Los vendedores no pueden ser menores de 21 años: se verifica que hayan
+    -- cumplido 21 al momento de su contratación (así también lo son hoy).
+    CONSTRAINT chk_vendedores_edad
+        CHECK (fecha_nacimiento <= DATE_SUB(fecha_contratacion, INTERVAL 21 YEAR))
+) ENGINE = InnoDB;
