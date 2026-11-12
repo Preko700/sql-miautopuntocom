@@ -91,3 +91,31 @@ CREATE TABLE ventas (
     CONSTRAINT chk_ventas_metodo_pago
         CHECK (metodo_pago IN ('Efectivo', 'Financiamiento', 'Tarjeta'))
 ) ENGINE = InnoDB;
+
+-- ----------------------------------------------------------------------------
+-- PARTE 2 (continuación): el año del vehículo no puede ser mayor al año actual.
+-- ----------------------------------------------------------------------------
+
+DELIMITER $$
+
+CREATE TRIGGER trg_vehiculos_anio_insert
+BEFORE INSERT ON vehiculos
+FOR EACH ROW
+BEGIN
+    IF NEW.anio > YEAR(CURDATE()) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'El año del vehículo no puede ser mayor al año actual';
+    END IF;
+END$$
+
+CREATE TRIGGER trg_vehiculos_anio_update
+BEFORE UPDATE ON vehiculos
+FOR EACH ROW
+BEGIN
+    IF NEW.anio > YEAR(CURDATE()) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'El año del vehículo no puede ser mayor al año actual';
+    END IF;
+END$$
+
+DELIMITER ;
