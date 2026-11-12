@@ -23,3 +23,14 @@ INSERT INTO vehiculos (id_vehiculo, marca, modelo, anio, color, precio, vin, tip
     (10, 'Hyundai', 'Accent',  2024, 'Blanco',   17900.00, 'KMHDH4AE5D0000010', 'Sedán',     'Nuevo'),
     (11, 'Mazda',   'CX-5',    2022, 'Rojo',     26400.00, 'JM1BK32F580000011', 'SUV',       'Usado'),
     (12, 'Mazda',   'Mazda 3', 2025, 'Gris',     25900.00, 'JM1BK32F580000012', 'Sedán',     'Nuevo');
+
+-- ----------------------------------------------------------------------------
+-- Clientes (datos ficticios)
+-- ----------------------------------------------------------------------------
+INSERT INTO clientes (id_cliente, nombre, apellido, cedula, telefono, email, direccion) VALUES
+    (1, 'María',   'Solano Vargas',   '1-0845-0231', '8812-3456', 'maria.solano@example.com',  'Cartago, Paraíso, 200 m sur de la iglesia'),
+    (2, 'José',    'Rojas Cordero',   '3-0412-0987', '8723-1190', 'jose.rojas@example.com',     'Cartago, Centro, Barrio Los Ángeles'),
+    (3, 'Daniela', 'Castro Mora',     '1-1190-0345', '6045-7721', 'daniela.castro@example.com', 'San José, Curridabat, Granadilla'),
+    (4, 'Luis',    'Jiménez Araya',   '2-0678-0412', '7011-2288', 'luis.jimenez@example.com',   'Alajuela, San Ramón, Centro'),
+    (5, 'Andrea',  'Brenes Salazar',  '3-0533-0764', '8390-5512', 'andrea.brenes@example.com',  'Heredia, Santo Domingo, Santa Rosa'),
+    (6, 'Carlos',  'Quesada Núñez',   '1-0976-0158', '8604-9033', 'carlos.quesada@example.com', 'San José, Escazú, San Rafael');
