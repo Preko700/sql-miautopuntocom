@@ -62,3 +62,16 @@ JOIN vehiculos ve ON ve.id_vehiculo = v.id_vehiculo
 JOIN clientes c   ON c.id_cliente   = v.id_cliente
 WHERE v.fecha_venta BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE()
 ORDER BY v.fecha_venta DESC;
+
+-- ----------------------------------------------------------------------------
+-- 6. Comisión ganada por cada vendedor según sus ventas
+--    (precio final de cada venta x porcentaje de comisión del vendedor).
+-- ----------------------------------------------------------------------------
+SELECT CONCAT(vd.nombre, ' ', vd.apellido)                                AS vendedor,
+       vd.comision_porcentual                                             AS comision_pct,
+       COALESCE(SUM(v.precio_final), 0)                                   AS ingreso_total,
+       ROUND(COALESCE(SUM(v.precio_final), 0) * vd.comision_porcentual / 100, 2) AS comision_ganada
+FROM vendedores vd
+LEFT JOIN ventas v ON v.id_vendedor = vd.id_vendedor
+GROUP BY vd.id_vendedor, vd.nombre, vd.apellido, vd.comision_porcentual
+ORDER BY comision_ganada DESC;
