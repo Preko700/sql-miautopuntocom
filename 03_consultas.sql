@@ -75,3 +75,16 @@ FROM vendedores vd
 LEFT JOIN ventas v ON v.id_vendedor = vd.id_vendedor
 GROUP BY vd.id_vendedor, vd.nombre, vd.apellido, vd.comision_porcentual
 ORDER BY comision_ganada DESC;
+
+-- ----------------------------------------------------------------------------
+-- 7. Promedio de precios de los vehículos vendidos, agrupados por tipo.
+--    Se muestran el promedio del precio de lista y el del precio final de venta.
+-- ----------------------------------------------------------------------------
+SELECT ve.tipo,
+       COUNT(*)                       AS vehiculos_vendidos,
+       ROUND(AVG(ve.precio), 2)       AS promedio_precio_lista,
+       ROUND(AVG(v.precio_final), 2)  AS promedio_precio_final
+FROM ventas v
+JOIN vehiculos ve ON ve.id_vehiculo = v.id_vehiculo
+GROUP BY ve.tipo
+ORDER BY promedio_precio_final DESC;
