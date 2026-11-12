@@ -68,3 +68,26 @@ CREATE TABLE vendedores (
     CONSTRAINT chk_vendedores_edad
         CHECK (fecha_nacimiento <= DATE_SUB(fecha_contratacion, INTERVAL 21 YEAR))
 ) ENGINE = InnoDB;
+
+CREATE TABLE ventas (
+    id_venta     INT            NOT NULL AUTO_INCREMENT,
+    id_vehiculo  INT            NOT NULL,
+    id_cliente   INT            NOT NULL,
+    id_vendedor  INT            NOT NULL,
+    fecha_venta  DATE           NOT NULL,
+    precio_final DECIMAL(12,2)  NOT NULL,
+    metodo_pago  VARCHAR(20)    NOT NULL,
+
+    CONSTRAINT pk_ventas PRIMARY KEY (id_venta),
+    -- Un vehículo se vende una sola vez.
+    CONSTRAINT uq_ventas_vehiculo UNIQUE (id_vehiculo),
+    CONSTRAINT fk_ventas_vehiculo FOREIGN KEY (id_vehiculo)
+        REFERENCES vehiculos (id_vehiculo) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_ventas_cliente FOREIGN KEY (id_cliente)
+        REFERENCES clientes (id_cliente) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_ventas_vendedor FOREIGN KEY (id_vendedor)
+        REFERENCES vendedores (id_vendedor) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT chk_ventas_precio_final CHECK (precio_final > 0),
+    CONSTRAINT chk_ventas_metodo_pago
+        CHECK (metodo_pago IN ('Efectivo', 'Financiamiento', 'Tarjeta'))
+) ENGINE = InnoDB;
