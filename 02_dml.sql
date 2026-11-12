@@ -34,3 +34,12 @@ INSERT INTO clientes (id_cliente, nombre, apellido, cedula, telefono, email, dir
     (4, 'Luis',    'Jiménez Araya',   '2-0678-0412', '7011-2288', 'luis.jimenez@example.com',   'Alajuela, San Ramón, Centro'),
     (5, 'Andrea',  'Brenes Salazar',  '3-0533-0764', '8390-5512', 'andrea.brenes@example.com',  'Heredia, Santo Domingo, Santa Rosa'),
     (6, 'Carlos',  'Quesada Núñez',   '1-0976-0158', '8604-9033', 'carlos.quesada@example.com', 'San José, Escazú, San Rafael');
+
+-- ----------------------------------------------------------------------------
+-- Vendedores (datos ficticios)
+-- ----------------------------------------------------------------------------
+INSERT INTO vendedores (id_vendedor, nombre, apellido, cedula, fecha_nacimiento, fecha_contratacion, comision_porcentual) VALUES
+    (1, 'Fernando', 'Arce Monge',    '3-0388-0521', '1988-03-14', '2018-02-01', 5.00),
+    (2, 'Paola',    'Vindas Chaves', '1-1021-0674', '1993-07-22', '2021-05-10', 3.50),
+    (3, 'Esteban',  'Mora Pacheco',  '3-0455-0812', '1990-11-05', '2019-09-16', 4.00),
+    (4, 'Karla',    'Ulate Segura',  '1-1345-0209', '2001-01-30', '2023-03-01', 6.50);
