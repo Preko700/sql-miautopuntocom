@@ -35,3 +35,16 @@ FROM vendedores vd
 LEFT JOIN ventas v ON v.id_vendedor = vd.id_vendedor
 GROUP BY vd.id_vendedor, vd.nombre, vd.apellido
 ORDER BY ingreso_total DESC;
+
+-- ----------------------------------------------------------------------------
+-- 4. Cliente que ha realizado la compra más costosa.
+--    (si hubiera empate en el precio máximo, se muestran todos los clientes).
+-- ----------------------------------------------------------------------------
+SELECT CONCAT(c.nombre, ' ', c.apellido) AS cliente,
+       c.cedula,
+       ve.marca, ve.modelo,
+       v.precio_final                    AS compra_mas_costosa
+FROM ventas v
+JOIN clientes c   ON c.id_cliente   = v.id_cliente
+JOIN vehiculos ve ON ve.id_vehiculo = v.id_vehiculo
+WHERE v.precio_final = (SELECT MAX(precio_final) FROM ventas);
