@@ -25,3 +25,13 @@ FROM vendedores vd
 LEFT JOIN ventas v ON v.id_vendedor = vd.id_vendedor
 GROUP BY vd.id_vendedor, vd.nombre, vd.apellido
 ORDER BY cantidad_ventas DESC;
+
+-- ----------------------------------------------------------------------------
+-- 3. Ingreso total generado por cada vendedor.
+-- ----------------------------------------------------------------------------
+SELECT CONCAT(vd.nombre, ' ', vd.apellido) AS vendedor,
+       COALESCE(SUM(v.precio_final), 0)    AS ingreso_total
+FROM vendedores vd
+LEFT JOIN ventas v ON v.id_vendedor = vd.id_vendedor
+GROUP BY vd.id_vendedor, vd.nombre, vd.apellido
+ORDER BY ingreso_total DESC;
