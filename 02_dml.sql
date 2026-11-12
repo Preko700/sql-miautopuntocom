@@ -43,3 +43,20 @@ INSERT INTO vendedores (id_vendedor, nombre, apellido, cedula, fecha_nacimiento,
     (2, 'Paola',    'Vindas Chaves', '1-1021-0674', '1993-07-22', '2021-05-10', 3.50),
     (3, 'Esteban',  'Mora Pacheco',  '3-0455-0812', '1990-11-05', '2019-09-16', 4.00),
     (4, 'Karla',    'Ulate Segura',  '1-1345-0209', '2001-01-30', '2023-03-01', 6.50);
+
+-- ----------------------------------------------------------------------------
+-- Ventas
+-- Las fechas son relativas a la fecha de ejecución (CURDATE) para que la
+-- consulta de "último mes" siempre tenga datos de prueba, sin importar el día.
+-- Vendedor 1: 3 ventas | Vendedor 2: 2 | Vendedor 3: 2 | Vendedor 4: 1
+-- Cliente 1 y cliente 2 compran dos veces. Quedan sin vender los vehículos 5, 7, 9 y 12.
+-- ----------------------------------------------------------------------------
+INSERT INTO ventas (id_venta, id_vehiculo, id_cliente, id_vendedor, fecha_venta, precio_final, metodo_pago) VALUES
+    (1, 3,  1, 1, DATE_SUB(CURDATE(), INTERVAL 75 DAY), 28900.00, 'Financiamiento'),
+    (2, 4,  2, 2, DATE_SUB(CURDATE(), INTERVAL 60 DAY), 21000.00, 'Efectivo'),
+    (3, 11, 3, 1, DATE_SUB(CURDATE(), INTERVAL 40 DAY), 26000.00, 'Tarjeta'),
+    (4, 6,  4, 3, DATE_SUB(CURDATE(), INTERVAL 33 DAY), 27000.00, 'Financiamiento'),
+    (5, 1,  1, 1, DATE_SUB(CURDATE(), INTERVAL 20 DAY), 24500.00, 'Tarjeta'),
+    (6, 2,  5, 3, DATE_SUB(CURDATE(), INTERVAL 12 DAY), 38500.00, 'Financiamiento'),
+    (7, 10, 6, 2, DATE_SUB(CURDATE(), INTERVAL 6 DAY),  17500.00, 'Efectivo'),
+    (8, 8,  2, 4, DATE_SUB(CURDATE(), INTERVAL 2 DAY),  23800.00, 'Tarjeta');
